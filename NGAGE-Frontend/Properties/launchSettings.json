@@ -32,7 +32,11 @@
         "launchBrowser": true,
         "environmentVariables": {
           "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "ApiSettings": {
+          "BaseUrl": "https://ngage-praktikant.azurewebsites.net/api/HttpTrigger",
+          "ApiKey": "uqiuCP7a-6_PNSN0ojjtk16VJUSrDe4T4IDEFBfbpHCbAzFuJcuflA=="
         }
       }
-    }
+      }
   }

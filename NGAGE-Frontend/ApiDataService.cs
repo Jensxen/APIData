@@ -1,18 +1,24 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 public class ApiDataService
 {
     private readonly HttpClient _httpClient;
-    private readonly string _baseUrl = "https://ngage-praktikant.azurewebsites.net/api/HttpTrigger?code=uqiuCP7a-6_PNSN0ojjtk16VJUSrDe4T4IDEFBfbpHCbAzFuJcuflA==";
+    private readonly string _baseUrl;
+    private readonly string _apiKey;
 
-    public ApiDataService(HttpClient httpClient)
+    public ApiDataService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
+        _baseUrl = configuration["ApiSettings:BaseUrl"]!;
+        _apiKey = configuration["ApiSettings:ApiKey"]!;
     }
 
     public async Task<string> GetRawJsonAsync(int? id = null)
     {
-        string url = _baseUrl;
+        string url = $"{_baseUrl}?code={_apiKey}";
         if (id.HasValue)
         {
             url += $"&id={id}";
