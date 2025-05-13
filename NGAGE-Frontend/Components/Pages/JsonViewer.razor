@@ -53,7 +53,7 @@ else
         try
         {
             isLoading = true;
-            rawJson = await ApiService.GetRawJsonAsync(24); // Default to ID 24
+            rawJson = await ApiService.GetRawJsonAsync(24); 
 
             if (!string.IsNullOrEmpty(rawJson))
             {
@@ -74,6 +74,7 @@ else
         }
     }
 
+	//Render JsonObject med rekursiv liste, da strukturen er ukendt.
     private RenderFragment RenderJsonObject(Dictionary<string, object>? obj) => builder =>
     {
         if (obj == null) return;
@@ -88,7 +89,7 @@ else
 
             builder.OpenElement(4, "strong");
             builder.AddContent(5, kvp.Key);
-            builder.CloseElement(); // </strong>
+            builder.CloseElement(); 
 
             builder.AddContent(6, ": ");
 
@@ -104,7 +105,7 @@ else
                         builder.OpenElement(7, "div");
                         builder.AddAttribute(8, "class", "ps-3 mt-2");
                         builder.AddContent(9, RenderJsonObject(childObj));
-                        builder.CloseElement(); // </div>
+                        builder.CloseElement(); 
                         break;
 
                     case System.Text.Json.JsonValueKind.Array:
@@ -131,11 +132,11 @@ else
                                 builder.AddContent(17, item.ToString());
                             }
 
-                            builder.CloseElement(); // </li>
+                            builder.CloseElement(); 
                         }
 
-                        builder.CloseElement(); // </ul>
-                        builder.CloseElement(); // </div>
+                        builder.CloseElement(); 
+                        builder.CloseElement(); 
                         break;
 
                     default:
@@ -148,9 +149,9 @@ else
                 builder.AddContent(19, kvp.Value?.ToString() ?? "null");
             }
 
-            builder.CloseElement(); // </li>
+            builder.CloseElement(); 
         }
 
-        builder.CloseElement(); // </ul>
+        builder.CloseElement(); 
     };
 }

@@ -33,7 +33,7 @@ public class ApiDataService
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = null // Keep original property names
+            PropertyNamingPolicy = null
         };
 
         return JsonSerializer.Deserialize<ApiItem>(rawJson, options);
