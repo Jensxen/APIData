@@ -1,0 +1,120 @@
+﻿@page "/"
+
+@inject ApiDataService ApiService
+
+<div class="container py-4">
+	<div class="mb-4 text-center">
+		<h1 class="display-5 fw-bold">NGAGE Data API</h1>
+	</div>
+
+	@if (item == null && !isLoading)
+	{
+		<div class="alert alert-info">
+			<i class="bi bi-info-circle me-2"></i> No data available.
+		</div>
+	}
+	else if (isLoading)
+	{
+		<div class="d-flex justify-content-center my-5">
+			<div class="spinner-border text-primary" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
+	}
+	else
+	{
+		<div class="card shadow-sm mb-4 border-0 rounded-3">
+			<div class="card-header bg-primary text-white py-3">
+				<h2 class="card-title h4 mb-0">@item.Title</h2>
+			</div>
+			<div class="card-body">
+				<div class="row g-4">
+
+					<div class="col-md-6">
+						<h3 class="h5 mb-3 border-bottom pb-2">Basic Information</h3>
+
+						<div class="row mb-2">
+							<div class="col-md-4 text-muted">ID:</div>
+							<div class="col-md-8 fw-medium">@item.Id</div>
+						</div>
+
+						@if (item.Description != null)
+						{
+							<div class="row mb-2">
+								<div class="col-md-4 text-muted">Description:</div>
+								<div class="col-md-8">@item.Description</div>
+							</div>
+						}
+
+						<div class="row mb-2">
+							<div class="col-md-4 text-muted">Created:</div>
+							<div class="col-md-8">@item.Created.ToString("yyyy-MM-dd HH:mm")</div>
+						</div>
+
+						<div class="row mb-2">
+							<div class="col-md-4 text-muted">Modified:</div>
+							<div class="col-md-8">@item.Modified.ToString("yyyy-MM-dd HH:mm")</div>
+						</div>
+
+						@if (!string.IsNullOrEmpty(item.OData__TopicHeader))
+						{
+							<div class="row mb-2">
+								<div class="col-md-4 text-muted">Topic Header:</div>
+								<div class="col-md-8">@item.OData__TopicHeader</div>
+							</div>
+						}
+					</div>
+
+
+					<div class="col-md-6">
+						@if (item.Service_x0020_omr_x00e5_de != null && item.Service_x0020_omr_x00e5_de.Any())
+						{
+							<h3 class="h5 mb-3 border-bottom pb-2">Topics</h3>
+
+							<div class="d-flex flex-wrap gap-2">
+								@foreach (var serviceArea in item.Service_x0020_omr_x00e5_de)
+								{
+									<div class="badge bg-light text-dark border p-2 rounded-pill">
+										@serviceArea.Label
+									</div>
+								}
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		@if (!string.IsNullOrEmpty(errorMessage))
+		{
+			<div class="alert alert-danger">
+				<i class="bi bi-exclamation-triangle-fill me-2"></i> @errorMessage
+			</div>
+		}
+	}
+</div>
+
+@code {
+	private ApiItem? item;
+	private bool isLoading = true;
+	private string? errorMessage;
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			isLoading = true;
+
+			item = await ApiService.GetItemAsync(24);
+		}
+		catch (Exception ex)
+		{
+			errorMessage = $"Error loading data: {ex.Message}";
+			Console.WriteLine($"Error: {ex}");
+		}
+		finally
+		{
+			isLoading = false;
+		}
+	}
+}
