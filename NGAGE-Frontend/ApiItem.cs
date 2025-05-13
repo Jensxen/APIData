@@ -6,11 +6,11 @@
     public DateTime Modified { get; set; }
     public DateTime Created { get; set; }
     public string? OData__TopicHeader { get; set; }
-    public List<ServiceArea> Service_x0020_omr_x00e5_de { get; set; } = new List<ServiceArea>();
+    public List<Topics> Service_x0020_omr_x00e5_de { get; set; } = new List<Topics>();
 
 }
 
-public class ServiceArea
+public class Topics
 {
     public string Label { get; set; } = string.Empty;
     public string TermGuid { get; set; } = string.Empty;
