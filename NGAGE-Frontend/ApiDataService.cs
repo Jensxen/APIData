@@ -39,3 +39,4 @@ public class ApiDataService
         return JsonSerializer.Deserialize<ApiItem>(rawJson, options);
     }
 }
+

@@ -362,9 +362,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-
-#Sikkerhed for NGAGE api
-appsettings.json
-appsettings.*.json
-!appsettings.template.json
-!appsettings.example.json
